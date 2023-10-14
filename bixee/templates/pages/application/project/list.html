@@ -1,0 +1,308 @@
+{% extends 'layout/app.html' %}
+
+{% block title %} Projects {% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="project-progree-breadcrumb">
+                <div class="breadcrumb-main user-member justify-content-sm-between ">
+                    <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
+                        <div class="d-flex align-items-center user-member__title justify-content-center me-sm-25">
+                            <h4 class="text-capitalize fw-500 breadcrumb-title">Proyectos</h4>
+                            <span class="sub-title ms-sm-25 ps-sm-25">Proyectos activos</span>
+                        </div>
+                    </div>
+                    <div class="action-btn">
+                        <a href="#" class="btn px-15 btn-primary" data-bs-toggle="modal" data-bs-target="#new-member">
+                            <i class="las la-plus fs-16"></i>Crear Proyecto</a>
+                        <div class="modal fade new-member" id="new-member" role="dialog" tabindex="-1"
+                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content  radius-xl">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">Crear Proyecto</h6>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <img src="{% static 'backend/img/svg/x.svg' %}" alt="x" class="svg">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="new-member-modal">
+                                            <form method="post" id="addProjectForm"
+                                                  action="{% url 'add_project' %}">
+                                                {% csrf_token %}
+                                                <div class="form-group mb-20">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Nombre del proyecto" name="nombre">
+                                                </div>
+                                                <div class="form-group mb-20">
+                                                    <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                              rows="3" placeholder="Descripción del proyecto"
+                                                              name="descripcion"></textarea>
+                                                </div>
+                                                <div class="mb-25">
+                                                    <div class="row form-group mb-10">
+                                                        <label for="name47">asignado al proyecto</label>
+                                                        <div class="dropdown dropdown-click dropdown-bottomCenter">
+                                                            <div class="btn-group">
+                                                                <input id="selectedUserInput" type="text" readonly
+                                                                       class="btn btn-outline-lighten btn-sm" value=""
+                                                                       placeholder="Selecciona un usuario"
+                                                                       name="asignado_a">
+                                                                <button type="button"
+                                                                        class="btn btn-outline-lighten btn-sm dropdown-toggle-split"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                    <img src="{% static 'backend/img/svg/user.svg' %}"
+                                                                         alt="user" class="svg">
+                                                                </button>
+                                                                <div class="dropdown-default dropdown-menu"
+                                                                     id="asignado_a">
+                                                                    {% for user in users %}
+                                                                    <a class="dropdown-item"
+                                                                       href="#">{{ user.username }}</a>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex new-member-calendar">
+                                                    <div class="form-group w-100 me-sm-15 form-group-calender">
+                                                        <label for="datepicker">Fecha de inicio</label>
+                                                        <div class="position-relative">
+                                                            <input type="text" class="form-control" id="datepicker"
+                                                                   placeholder="mm/dd/yyyy" name="fecha_inicio">
+                                                            <a href="#">
+                                                                <img class="svg"
+                                                                     src="{% static 'backend/img/svg/chevron-right.svg' %}"
+                                                                     alt="chevron-right.svg"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group w-100 form-group-calender">
+                                                        <label for="datepicker2">Fecha de entrega</label>
+                                                        <div class="position-relative">
+                                                            <input type="text" class="form-control" id="datepicker2"
+                                                                   placeholder="mm/dd/yyyy" name="fecha_entrega">
+                                                            <a href="#">
+                                                                <img class="svg"
+                                                                     src="{% static 'backend/img/svg/chevron-right.svg' %}"
+                                                                     alt="chevron-right.svg"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-felx">
+                                                    <div class="form-group w-100">
+                                                        <label for="proyect_price" class="form-check-label">Precio del
+                                                            proyecto</label>
+                                                        <input type="number" class="form-control" id="proyect_price"
+                                                               placeholder="Precio del proyecto" name="precio_proyecto">
+                                                    </div>
+                                                </div>
+                                                <div class="d-fex">
+                                                    <div class="form-group w-100">
+                                                        <label for="about_project" class="form-check-label">Sobre el
+                                                            proyecto</label>
+                                                        <textarea class="form-control" id="about_project"
+                                                                  rows="3" placeholder="Sobre el proyecto"
+                                                                  name="sobre_proyecto"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="button-group d-flex pt-25">
+                                                    <button class="btn btn-primary btn-default btn-squared text-capitalize">
+                                                        añadir nuevo proyecto
+                                                    </button>
+                                                    <button type="button"
+                                                            class="btn btn-light btn-default btn-squared fw-400 text-capitalize b-light color-light"
+                                                            data-bs-dismiss="modal">cancelar
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="project-top-wrapper project-top-progress d-flex justify-content-between flex-wrap">
+                <div class="project-top-left d-flex flex-wrap justify-content-lg-between justify-content-center mt-n10">
+                    <div class="project-tap global-shadow order-lg-1 order-2 my-10">
+                        <ul class="nav px-1" id="ap-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="ap-overview-tab" data-bs-toggle="pill"
+                                   href="#ap-overview" role="tab" aria-controls="ap-overview" aria-selected="true">
+                                    Todos los proyectos
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="timeline-tab" data-bs-toggle="pill" href="#timeline" role="tab"
+                                   aria-controls="timeline" aria-selected="false">en progreso</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="activity-tab" data-bs-toggle="pill" href="#activity" role="tab"
+                                   aria-controls="activity" aria-selected="false">completado</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="late-tab" data-bs-toggle="pill" href="#late" role="tab"
+                                   aria-controls="late" aria-selected="false">atrasado</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="early-tab" data-bs-toggle="pill" href="#early" role="tab"
+                                   aria-controls="early" aria-selected="false">a tiempo</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="project-search project-search--height global-shadow ms-md-20 my-10 order-md-2 order-1">
+                        <form action="/" class="d-flex align-items-center user-member__form">
+                            <img src="{% static 'backend/img/svg/search.svg' %}" alt="search" class="svg">
+                            <input class="form-control me-sm-2 border-0 box-shadow-none" type="search"
+                                   placeholder="Buscar por nombre" aria-label="Search">
+                        </form>
+                    </div>
+                </div>
+                <div class="project-top-right d-flex flex-wrap">
+                    <div class="project-category">
+                        <div class="d-flex align-items-center">
+                            <p class="mb-0 me-10 fs-14 color-light">ordenar por:</p>
+                            <div class="project-category__select">
+                                <select class="js-example-basic-single js-states form-control" id="event-category">
+                                    <option value="all" selected>Categoría de proyecto</option>
+                                    <option value="JAN">event</option>
+                                    <option value="FBR">Venues</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="projects-tab-content projects-tab-content--progress">
+        <div class="tab-content mt-25" id="ap-tabContent">
+            <div class="tab-pane fade show active" id="ap-overview" role="tabpanel" aria-labelledby="ap-overview-tab">
+                <div class="row">
+                    {% for proyecto_data in proyectos %}
+                    <div class="col-xl-4 mb-25 col-md-6">
+                        <div class="user-group radius-xl media-ui media-ui--{{ proyecto_data.estado }} pt-30 pb-25">
+                            <div class="border-bottom px-30">
+                                <div class="media user-group-media d-flex justify-content-between">
+                                    <div class="media-body d-flex align-items-center flex-wrap text-capitalize my-sm-0 my-n2">
+                                        <a href="{% url 'project_detail' proyecto_data.proyecto.id %}">
+                                            <h6 class="mt-0 fw-500 user-group media-ui__title bg-transparent">
+                                                {{ proyecto_data.proyecto.nombre }}
+                                            </h6>
+                                        </a>
+                                        {% if proyecto_data.estado == 'early' %}
+                                        <span class="my-sm-0 my-2 media-badge text-uppercase color-white bg-primary">
+                                        {% elif proyecto_data.estado == 'late' %}
+                                        <span class="my-sm-0 my-2 media-badge text-uppercase color-white bg-danger">
+                                        {% elif proyecto_data.estado == 'middle' %}
+                                        <span class="my-sm-0 my-2 media-badge text-uppercase color-white bg-warning">
+                                        {% else %}
+                                        <span class="my-sm-0 my-2 media-badge text-uppercase color-white bg-success">
+                                        {% endif %}
+                                        {{ proyecto_data.estado }}
+                                        </span>
+                                    </div>
+                                    ...
+                                </div>
+                                <div class="user-group-people mt-15 text-capitalize">
+                                    <p>{{ proyecto_data.proyecto.descripcion }}</p>
+                                    <div class="user-group-project">
+                                        <div class="d-flex align-items-center user-group-progress-top">
+                                            <div class="media-ui__start">
+                                                <span class="color-light fs-12">Fecha de inicio</span>
+                                                <p class="fs-14 fw-500 color-dark mb-0">{{
+                                                    proyecto_data.proyecto.fecha_inicio }}</p>
+                                            </div>
+                                            <div class="media-ui__end">
+                                                <span class="color-light fs-12">Fecha de finalización</span>
+                                                <p class="fs-16 fw-500 color-success mb-0">
+                                                    {{ proyecto_data.proyecto.fecha_finalizacion }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="user-group-progress-bar">
+                                    <div class="progress-wrap d-flex align-items-center mb-0">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-primary" role="progressbar"
+                                                 style="width: {{ proyecto_data.proyecto.progreso }}%;"
+                                                 aria-valuenow="{{ proyecto_data.proyecto.progreso }}" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                        <span class="progress-percentage">{{ proyecto_data.proyecto.progreso }}%</span>
+                                    </div>
+                                    <p class="color-light fs-12 mb-20">
+                                        {{ proyecto_data.proyecto.tareas_completadas }} / {{
+                                        proyecto_data.proyecto.tareas_totales }} tareas
+                                        completadas
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-20 px-30">
+                                <p class="fs-13 color-light mb-10">Asignada a </p>
+                                <ul class="d-flex flex-wrap user-group-people__parent">
+                                    {% for usuario in proyecto_data.proyecto.asignado_a.all %}
+                                    <li>
+                                        <a href="#">
+                                            <img class="rounded-circle wh-34 bg-opacity-secondary"
+                                                 src="{{ usuario.userprofile.image.url }}" alt="{{ usuario.username }}">
+
+                                        </a>
+                                        <p class="justify-content-center" style="text-align: center;">
+                                            {{usuario.username }}</p>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="d-flex justify-content-sm-end justify-content-star mt-1 mb-30">
+                            <nav class="dm-page ">
+                                <ul class="dm-pagination d-flex">
+                                    <li class="dm-pagination__item">
+                                        <a href="#" class="dm-pagination__link pagination-control"><span
+                                                class="la la-angle-left"></span></a>
+                                        <a href="#" class="dm-pagination__link active"><span
+                                                class="page-number">1</span></a>
+                                        <a href="#" class="dm-pagination__link pagination-control"><span
+                                                class="la la-angle-right"></span></a>
+                                        <a href="#" class="dm-pagination__option">
+                                        </a>
+                                    </li>
+                                    <li class="dm-pagination__item">
+                                        <div class="paging-option">
+                                            <select name="page-number" class="page-selection">
+                                                <option value="20">20/pagina</option>
+                                                <option value="40">40/pagina</option>
+                                                <option value="60">60/pagina</option>
+                                            </select>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/projects.js' %}"></script>
+{% endblock %}

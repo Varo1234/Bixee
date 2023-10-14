@@ -1,0 +1,441 @@
+{% extends 'layout/app.html' %}
+
+{% block title %} Tareas {% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="dm-page-content">
+    <div class="container-fluid">
+        <div class="note-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-main">
+                        <h4 class="text-capitalize breadcrumb-title">Tareas</h4>
+                        <div class="breadcrumb-action justify-content-center flex-wrap">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#"><i class="las la-home"></i>Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Tareas</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="note-contents">
+                        <div class="note-sidebar-wrapper mb-30">
+                            <div class="note-sidebar">
+                                <div class="card border-0">
+                                    <div class="card-body px-15 pt-30">
+                                        <div class="px-3">
+                                            <a href="#" class="btn btn-primary btn-default btn-rounded btn-block"
+                                               data-bs-toggle="modal" data-bs-target="#taskModal"> <img
+                                                    src="{% static 'backend/img/svg/plus.svg' %}" alt="plus"
+                                                    class="svg">
+                                                Añadir Tareas</a>
+                                        </div>
+                                        <div class="note-types task-types">
+                                            <ul class="nav  mb-3" id="pills-tab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                                       href="#pills-home" role="tab" aria-controls="pills-home"
+                                                       aria-selected="true"><img class="svg"
+                                                                                 src="{% static 'backend/img/svg/edit.svg' %}"
+                                                                                 alt="edit"></button> All</a>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                                       href="#pills-profile" role="tab" aria-controls="pills-profile"
+                                                       aria-selected="false"><img
+                                                            src="{% static 'backend/img/svg/star.svg' %}" alt="star"
+                                                            class="svg">
+                                                        Importantes</a>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                                                       href="#pills-contact" role="tab" aria-controls="pills-contact"
+                                                       aria-selected="false"><img
+                                                            src="{% static 'backend/img/svg/check.svg' %}" alt="check"
+                                                            class="svg">
+                                                        Completadas</a>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link" id="pills-deleted-tab" data-bs-toggle="pill"
+                                                       href="#pills-deleted" role="tab" aria-controls="pills-deleted"
+                                                       aria-selected="false"><img class="svg"
+                                                                                  src="{% static 'backend/img/svg/trash-2.svg' %}"
+                                                                                  alt="">
+                                                        Eliminadas</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="note-grid-wrapper mb-30">
+                            <div class="task-wrapper">
+                                <div class="task-single">
+                                    <div class="task-card card">
+                                        <div class="card-header">
+                                            Listas de tareas
+                                        </div>
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                                 aria-labelledby="pills-home-tab">
+                                                {% for task in tasks %}
+                                                <div class="card-body task-card__body">
+                                                    <div class="task-card__content d-flex justify-content-between align-items-center">
+                                                        <div class="task-card__header">
+                                                            <div class="checkbox-group d-flex">
+                                                                <form action="{% url 'toggle_task' proyecto.id task.id %}"
+                                                                      method="post">
+                                                                    {% csrf_token %}
+                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                        <input class="checkbox"
+                                                                               type="checkbox"
+                                                                               id="check-grp-task{{task.id}}"
+                                                                               name="completed"
+                                                                               data-task-id="{{ task.id }}"
+                                                                               data-project-id="{{ proyecto.id }}"
+                                                                               value="true"
+                                                                               {% if task.completed %}checked{% endif %}
+                                                                        >
+                                                                        <label for="check-grp-task{{task.id}}" class=""
+                                                                               id="taskNameLabel{{task.id}}">
+                                                                            {{ task.name }}
+                                                                        </label>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <span id="taskDescriptionLabel{{task.id}}">{{ task.description }}</span>
+                                                        </div>
+                                                        <div class="table-actions">
+                                                            <a href="#"
+                                                               class="task-important
+                                                               {% if task.important %}active{% endif %}"
+                                                               data-task-id-important="{{ task.id }}"
+                                                               data-project-id="{{ proyecto.id }}">
+                                                                <img src="{% static 'backend/img/svg/star.svg' %}"
+                                                                     alt="star" class="svg">
+                                                            </a>
+                                                            <div class="dropdown dropdown-click">
+                                                                <button class="btn-link border-0 bg-transparent p-0"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                    <img class="svg"
+                                                                         src="{% static 'backend/img/svg/more-vertical.svg' %}"
+                                                                         alt="more-vertical">
+                                                                </button>
+                                                                <div class="dropdown-default dropdown-menu">
+                                                                    <a class="dropdown-item" href="#"
+                                                                       data-bs-toggle="modal"
+                                                                       data-bs-target="#taskModal2"
+                                                                       data-name="{{ task.name }}"
+                                                                       data-id="{{ task.id }}"
+                                                                       data-description="{{ task.description }}"
+                                                                       data-project_id="{{ proyecto.id }}">
+                                                                        <img src="{% static 'backend/img/svg/edit.svg' %}"
+                                                                             alt="svg"
+                                                                             class="svg">
+                                                                        edit
+                                                                    </a>
+                                                                    <a class="dropdown-item"
+                                                                       href="{% url 'delete_task' proyecto.id task.id %}"><img
+                                                                            class="svg"
+                                                                            src="{% static 'backend/img/svg/trash-2.svg' %}"
+                                                                            alt="">
+                                                                        delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                                 aria-labelledby="pills-profile-tab">
+                                                {% for task in important_tasks %}
+                                                <div class="card-body task-card__body">
+                                                    <div class="task-card__content d-flex justify-content-between align-items-center">
+                                                        <div class="task-card__header">
+                                                            <div class="checkbox-group d-flex">
+                                                                <form action="{% url 'toggle_task' proyecto.id task.id %}"
+                                                                      method="post">
+                                                                    {% csrf_token %}
+                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                        <input class="checkbox"
+                                                                               type="checkbox"
+                                                                               id="check-grp-task{{task.id}}"
+                                                                               name="completed"
+                                                                               data-task-id="{{ task.id }}"
+                                                                               data-project-id="{{ proyecto.id }}"
+                                                                               value="true"
+                                                                               {% if task.completed %}checked{% endif %}
+                                                                        >
+                                                                        <label for="check-grp-task{{task.id}}" class=""
+                                                                               id="taskNameLabel{{task.id}}">
+                                                                            {{ task.name }}
+                                                                        </label>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <span id="taskDescriptionLabel{{task.id}}">{{ task.description }}</span>
+                                                        </div>
+                                                        <div class="table-actions">
+                                                            <a href="#"
+                                                               class="task-important {% if task.important %}active{% endif %}"
+                                                               data-task-id-important="{{ task.id }}"
+                                                               data-project-id="{{ proyecto.id }}">
+                                                                <img src="{% static 'backend/img/svg/star.svg' %}"
+                                                                     alt="star" class="svg">
+                                                            </a>
+                                                            <div class="dropdown dropdown-click">
+                                                                <button class="btn-link border-0 bg-transparent p-0"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                    <img class="svg"
+                                                                         src="{% static 'backend/img/svg/more-vertical.svg' %}"
+                                                                         alt="more-vertical">
+                                                                </button>
+                                                                <div class="dropdown-default dropdown-menu">
+                                                                    <a class="dropdown-item" href="#"
+                                                                       data-bs-toggle="modal"
+                                                                       data-bs-target="#taskModal2"
+                                                                       data-name="{{ task.name }}"
+                                                                       data-id="{{ task.id }}"
+                                                                       data-description="{{ task.description }}"
+                                                                       data-project_id="{{ proyecto.id }}">
+                                                                        <img src="{% static 'backend/img/svg/edit.svg' %}"
+                                                                             alt="svg"
+                                                                             class="svg">
+                                                                        edit
+                                                                    </a>
+                                                                    <a class="dropdown-item"
+                                                                       href="{% url 'delete_task' proyecto.id task.id %}"><img
+                                                                            class="svg"
+                                                                            src="{% static 'backend/img/svg/trash-2.svg' %}"
+                                                                            alt="">
+                                                                        delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                                                 aria-labelledby="pills-contact-tab">
+                                                {% for task in completed_tasks %}
+                                                <div class="card-body task-card__body">
+                                                    <div class="task-card__content d-flex justify-content-between align-items-center">
+                                                        <div class="task-card__header">
+                                                            <div class="checkbox-group d-flex">
+                                                                <form action="{% url 'toggle_task' proyecto.id task.id %}"
+                                                                      method="post">
+                                                                    {% csrf_token %}
+                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                        <input class="checkbox"
+                                                                               type="checkbox"
+                                                                               id="check-grp-task{{task.id}}"
+                                                                               name="completed"
+                                                                               data-task-id="{{ task.id }}"
+                                                                               data-project-id="{{ proyecto.id }}"
+                                                                               value="true"
+                                                                               {% if task.completed %}checked{% endif %}
+                                                                        >
+                                                                        <label for="check-grp-task{{task.id}}" class=""
+                                                                               id="taskNameLabel{{task.id}}">
+                                                                            {{ task.name }}
+                                                                        </label>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <span id="taskDescriptionLabel{{task.id}}">{{ task.description }}</span>
+                                                        </div>
+                                                        <div class="table-actions">
+                                                            <a href="#"
+                                                               class="task-important {% if task.important %}active{% endif %}"
+                                                               data-task-id-important="{{ task.id }}"
+                                                               data-project-id="{{ proyecto.id }}">
+                                                                <img src="{% static 'backend/img/svg/star.svg' %}"
+                                                                     alt="star" class="svg">
+                                                            </a>
+                                                            <div class="dropdown dropdown-click">
+                                                                <button class="btn-link border-0 bg-transparent p-0"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                    <img class="svg"
+                                                                         src="{% static 'backend/img/svg/more-vertical.svg' %}"
+                                                                         alt="more-vertical">
+                                                                </button>
+                                                                <div class="dropdown-default dropdown-menu">
+                                                                    <a class="dropdown-item" href="#"
+                                                                       data-bs-toggle="modal"
+                                                                       data-bs-target="#taskModal2"
+                                                                       data-name="{{ task.name }}"
+                                                                       data-id="{{ task.id }}"
+                                                                       data-description="{{ task.description }}"
+                                                                       data-project_id="{{ proyecto.id }}">
+                                                                        <img src="{% static 'backend/img/svg/edit.svg' %}"
+                                                                             alt="svg"
+                                                                             class="svg">
+                                                                        edit
+                                                                    </a>
+                                                                    <a class="dropdown-item"
+                                                                       href="{% url 'delete_task' proyecto.id task.id %}"><img
+                                                                            class="svg"
+                                                                            src="{% static 'backend/img/svg/trash-2.svg' %}"
+                                                                            alt="">
+                                                                        delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-deleted" role="tabpanel"
+                                                 aria-labelledby="pills-deleted-tab">
+                                                {% for task in deleted_tasks %}
+                                                <div class="card-body task-card__body">
+                                                    <div class="task-card__content d-flex justify-content-between align-items-center">
+                                                        <div class="task-card__header">
+                                                            <div class="checkbox-group d-flex">
+                                                                <form action="{% url 'toggle_task' proyecto.id task.id %}"
+                                                                      method="post">
+                                                                    {% csrf_token %}
+                                                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                        <input class="checkbox"
+                                                                               type="checkbox"
+                                                                               id="check-grp-task{{task.id}}"
+                                                                               name="completed"
+                                                                               data-task-id="{{ task.id }}"
+                                                                               data-project-id="{{ proyecto.id }}"
+                                                                               value="true"
+                                                                               {% if task.completed %}checked{% endif %}
+                                                                        >
+                                                                        <label for="check-grp-task{{task.id}}" class=""
+                                                                               id="taskNameLabel{{task.id}}">
+                                                                            {{ task.name }}
+                                                                        </label>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <span id="taskDescriptionLabel{{task.id}}">{{ task.description }}</span>
+                                                        </div>
+                                                        <div class="table-actions">
+                                                            <a href="#"
+                                                               class="task-important {% if task.important %}active{% endif %}"
+                                                               data-task-id-important="{{ task.id }}"
+                                                               data-project-id="{{ proyecto.id }}">
+                                                                <img src="{% static 'backend/img/svg/star.svg' %}"
+                                                                     alt="star" class="svg">
+                                                            </a>
+                                                            <div class="dropdown dropdown-click">
+                                                                <button class="btn-link border-0 bg-transparent p-0"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                    <img class="svg"
+                                                                         src="{% static 'backend/img/svg/more-vertical.svg' %}"
+                                                                         alt="more-vertical">
+                                                                </button>
+                                                                <div class="dropdown-default dropdown-menu">
+                                                                    <a class="dropdown-item" href="#"
+                                                                       data-bs-toggle="modal"
+                                                                       data-bs-target="#taskModal2"
+                                                                       data-name="{{ task.name }}"
+                                                                       data-id="{{ task.id }}"
+                                                                       data-description="{{ task.description }}"
+                                                                       data-project_id="{{ proyecto.id }}">
+                                                                        <img src="{% static 'backend/img/svg/edit.svg' %}"
+                                                                             alt="svg"
+                                                                             class="svg">
+                                                                        edit
+                                                                    </a>
+                                                                    <a class="dropdown-item"
+                                                                       href="{% url 'delete_task' proyecto.id task.id %}"><img
+                                                                            class="svg"
+                                                                            src="{% static 'backend/img/svg/trash-2.svg' %}"
+                                                                            alt="">
+                                                                        delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade task-modal" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header">
+                    <h5 class="modal-title">Añadir Tarea</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <img src="{% static 'backend/img/svg/x.svg' %}" alt="x" class="svg">
+                    </button>
+                </div>
+                <form method="post" id="addTaskForm" action="{% url 'add_task' proyecto.id %}">
+                    {% csrf_token %}
+                    <div class="form-group mb-20 mt-20">
+                        <input type="text" name="name" class="form-control" placeholder="Title">
+                    </div>
+                    <div class="form-group mb-15">
+                        <textarea name="description" class="form-control" placeholder="Add description"></textarea>
+                    </div>
+                    <div class="modal-footer m-n15">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Añadir Tarea</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade task-modal" id="taskModal2" tabindex="-1" aria-labelledby="taskModalLabal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Tarea</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <img src="{% static 'backend/img/svg/x.svg' %}" alt="x" class="svg">
+                    </button>
+                </div>
+                <form method="post" id="editTaskForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="task_id" value="{{ task.id }}">
+                    <div class="form-group mb-20 mt-20">
+                        <input type="text" name="name" class="form-control" placeholder="Edit Title"
+                               value="{{ task.name }}">
+                    </div>
+                    <div class="form-group mb-15">
+                        <textarea name="description" class="form-control" placeholder="Add description">
+                            {{ task.description }}
+                        </textarea>
+                    </div>
+                    <div class="modal-footer m-n15">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/projects.js' %}"></script>
+{% endblock %}

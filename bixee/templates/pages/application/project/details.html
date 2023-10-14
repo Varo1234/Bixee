@@ -1,0 +1,285 @@
+{% extends 'layout/app.html' %}
+
+{% block title %} Project Details {% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="breadcrumb-main application-ui mb-30">
+                <div class="breadcrumb-action d-flex">
+                    <div class="d-flex align-items-center user-member__title me-sm-25 me-0">
+                        <h4 class="text-capitalize fw-500 breadcrumb-title">{{ proyecto.nombre }}</h4>
+                    </div>
+                    <div class="action-btn me-10 my-sm-0">
+                        <a href="#"
+                           class="btn btn-primary bg-primary fs-12 fw-500"
+                           data-bs-toggle="modal"
+                           data-bs-target="#taskModal"><img
+                                src="{% static 'backend/img/svg/plus.svg' %}" alt="plus" class="svg"> agregar tarea</a>
+                    </div>
+                    <div class="btn-group-toggle" data-bs-toggle="buttons">
+                        <input type="checkbox" class="btn-check"
+                               data-project-id="{{ proyecto.id }}"
+                               id="btn-check-2-outlined" autocomplete="off">
+                        <label class="btn btn-outline-secondary {% if proyecto.completado %}checked{% endif %}"
+                               for="btn-check-2-outlined"> <img
+                                src="{% static 'backend/img/svg/check.svg' %}" alt="check" class="svg"> Marcar como
+                            completado</label>
+                    </div>
+                </div>
+                <div class="d-flex text-capitalize">
+                    <button type="button"
+                            class="breadcrumb-edit btn btn-white border-0 color-primary content-center fs-12 fw-500 radius-md">
+                        <img src="{% static 'backend/img/svg/edit-3.svg' %}" alt="edit-3" class="svg">editar
+                    </button>
+                    <button type="button"
+                            class="breadcrumb-remove border-0 color-danger content-center bg-white fs-12 fw-500 ms-10 radius-md">
+                        <img class="svg" src="{% static 'backend/img/svg/trash-2.svg' %}" alt="trash-2">eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="projects-tab-content mb-30">
+        <div class="row">
+            <div class="col-xxl-3 col-lg-4 mb-25">
+                <div class="progress-box px-25 pt-25 pb-10 bg-success radius-xl">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h6 class="text-white fw-500 fs-16 text-capitalize">progreso</h6>
+                        <span class="progress-percentage text-white fw-500 fs-16 text-capitalize">{{ progress }}</span>
+                    </div>
+                    <div class="progress-wrap d-flex align-items-center mb-15">
+                        <div class="progress progress-height">
+                            <div class="progress-bar bg-white" role="progressbar" style="width: {{ progress }}%;" aria-valuenow="{{ progress }}"
+                                 aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-25">
+                    <div class="card-body">
+                        <div class="application-task d-flex align-items-center mb-25">
+                            <div class="application-task-icon wh-60 bg-opacity-secondary content-center">
+                                <img class="svg wh-25 text-secondary" src="{% static 'backend/img/svg/at.svg' %}"
+                                     alt="img">
+                            </div>
+                            <div class="application-task-content">
+                                <h4>{{ tareas_totales }}</h4>
+                                <span class="text-light fs-14 mt-1 text-capitalize">todas las tareas</span>
+                            </div>
+                        </div>
+                        <div class="application-task d-flex align-items-center mb-25">
+                            <div class="application-task-icon wh-60 bg-opacity-primary content-center">
+                                <img class="svg wh-25 text-primary" src="{% static 'backend/img/svg/at2.svg' %}"
+                                     alt="img">
+                            </div>
+                            <div class="application-task-content">
+                                <h4>{{ tareas_completadas }}</h4>
+                                <span class="text-light fs-14 mt-1 text-capitalize">tareas completadas</span>
+                            </div>
+                        </div>
+                        <div class="application-task d-flex align-items-center mb-25">
+                            <div class="application-task-icon wh-60 bg-opacity-success content-center">
+                                <img class="svg wh-25 text-success" src="{% static 'backend/img/svg/at4.svg' %}"
+                                     alt="img">
+                            </div>
+                            <div class="application-task-content">
+                                <h4>{{ proyecto.precio_proyecto }}</h4>
+                                <span class="text-light fs-14 mt-1 text-capitalize">Precio del proyecto</span>
+                            </div>
+                        </div>
+                        <div class="application-task d-flex align-items-center">
+                            <div class="application-task-icon wh-60 bg-opacity-warning content-center">
+                                <img class="svg wh-25 text-warning" src="{% static 'backend/img/svg/at3.svg' %}"
+                                     alt="img">
+                            </div>
+                            <div class="application-task-content">
+                                <h4>{{ proyecto.horas_trabajo }}</h4>
+                                <span class="text-light fs-14 mt-1 text-capitalize">horas de trabajo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-9 col-lg-8">
+                <div class="row">
+                    <div class="col-xxl-8 col-lg-12 mb-25">
+                        <div class="card border-0 pb-md-50 pb-15">
+                            <div class="card-header py-sm-20 py-3  px-sm-25 px-3 ">
+                                <h6>Sobre el proyecto</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="about-projects">
+                                    <div class="about-projects__details">
+                                        <p class="fs-15 mb-25">{{ proyecto.sobre_proyecto }}</p>
+                                    </div>
+                                    <ul class="d-flex text-capitalize">
+                                        <li>
+                                            <span class="color-light fs-13">Asignado a:</span>
+                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{ asignado_a }}</p>
+                                        </li>
+                                        <li>
+                                            <span class="color-light fs-13">Fecha de inicio</span>
+                                            <p class="color-primary fs-14 mt-1 mb-0 fw-500">
+                                                {{ proyecto.fecha_inicio }}</p>
+                                        </li>
+                                        <li>
+                                            <span class="color-light fs-13">Fecha de entrega</span>
+                                            <p class="color-danger fs-14 mt-1 mb-0 fw-500">
+                                                {{ proyecto.fecha_entrega }}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-8 col-lg-7 col-12 mb-25">
+                <div class="card pb-10 border-0">
+                    <div class="card-header p-0">
+                        <ul class="nav px-25 ap-tab-main app-ui-tab" id="project-ap-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="project-overview-tab" data-bs-toggle="pill"
+                                   href="#project-overview" role="tab" aria-controls="project-overview"
+                                   aria-selected="true">Lista de tareas</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content w-100" id="projectContent">
+                        <div class="tab-pane fade show active" id="project-overview" role="tabpanel"
+                             aria-labelledby="project-overview-tab">
+                            <div class="card-body px-0 pt-15 pb-10">
+                                <div class="project-task table-responsive">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                        {% for task in tasks %}
+                                        <tr class="project-task-list ptl--hover draggable " draggable="true">
+                                            <td>
+                                                <div class="checkbox-group d-flex">
+                                                    <form action="{% url 'toggle_task' proyecto.id task.id %}"
+                                                          method="post">
+                                                        {% csrf_token %}
+                                                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                            <input class="checkbox"
+                                                                   type="checkbox"
+                                                                   id="check-grp-task{{task.id}}"
+                                                                   name="completed"
+                                                                   data-task-id="{{ task.id }}"
+                                                                   data-project-id="{{ proyecto.id }}"
+                                                                   value="true"
+                                                                   {% if task.completed %}checked{% endif %}
+                                                            >
+                                                            <label for="check-grp-task{{task.id}}" class=""
+                                                                   id="taskNameLabel{{task.id}}">
+                                                                {{ task.name }}
+                                                            </label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="project-task-list__right">
+                                                    <ul class="d-flex align-content-center">
+                                                        <li>
+                                                            <div class="dropdown dropleft">
+                                                                <button class="btn-link border-0 bg-transparent p-0"
+                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                    <img src="{% static 'backend/img/svg/more-horizontal.svg' %}"
+                                                                         alt="more-horizontal" class="svg">
+                                                                </button>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="#"
+                                                                       data-bs-toggle="modal"
+                                                                       data-bs-target="#taskModal2"
+                                                                       data-name="{{ task.name }}"
+                                                                       data-description="{{ task.description }}">
+                                                                        edit
+                                                                    </a>
+                                                                    <a class="dropdown-item" href="#">delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <div class="task-list-btn px-25 my-10">
+                                        <button class="text-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#taskModal">
+                                            <img class="svg" src="{% static 'backend/img/svg/plus.svg' %}" alt="">Agregar
+                                            Tarea
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade task-modal" id="taskModal2" tabindex="-1" aria-labelledby="taskModalLabal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Tarea</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <img src="{% static 'backend/img/svg/x.svg' %}" alt="x" class="svg">
+                    </button>
+                </div>
+                <form action="/">
+                    <div class="form-group mb-20 mt-20">
+                        <input type="text" class="form-control" placeholder="Edit Title">
+                    </div>
+                    <div class="form-group mb-15">
+                        <textarea class="form-control" placeholder="Add description"></textarea>
+                    </div>
+                </form>
+                <div class="modal-footer m-n15">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade task-modal" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-header">
+                    <h5 class="modal-title">Añadir Tarea</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <img src="{% static 'backend/img/svg/x.svg' %}" alt="x" class="svg">
+                    </button>
+                </div>
+                <form method="post" id="addTaskForm" action="{% url 'add_task' proyecto.id %}">
+                    {% csrf_token %}
+                    <div class="form-group mb-20 mt-20">
+                        <input type="text" name="name" class="form-control" placeholder="Title">
+                    </div>
+                    <div class="form-group mb-15">
+                        <textarea name="description" class="form-control" placeholder="Add description"></textarea>
+                    </div>
+                    <div class="modal-footer m-n15">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Añadir Tarea</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/projects.js' %}"></script>
+{% endblock %}

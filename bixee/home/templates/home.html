@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
-
+<html>
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -26,10 +25,51 @@
     <!-- Custom  scss -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="58">
+<!-- Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
+            </div>
+            <div class="modal-body">
+                <!--mensajes-->
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--script-->
+{% if messages %}
+<script>
+    $(document).ready(function() {
+    var myModal = new bootstrap.Modal(document.getElementById('messageModal'), {});
+    if ({{ messages|length }} > 0) {
+        myModal.show();
+    }
+});
 
+</script>
+{% endif %}
 <!--Navbar Start-->
 <nav class="navbar navbar-expand-lg fixed-top sticky" id="navbar">
     <div class="container">
@@ -44,32 +84,32 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="navbar-navlist">
                 <li class="nav-item">
-                    <a href="#home" class="nav-link" id="scrollElement">Home</a>
+                    <a href="#home" class="nav-link" id="scrollElement">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
+                    <a href="#about" class="nav-link">Sobre nosotros</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#features" class="nav-link">Servicios</a>
                 </li>
+<!--                <li class="nav-item">-->
+<!--                    <a href="#clients" class="nav-link">Clients</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a href="#pricing" class="nav-link">Plans</a>-->
+<!--                </li>-->
                 <li class="nav-item">
-                    <a href="#clients" class="nav-link">Clients</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#pricing" class="nav-link">Plans</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="#contact" class="nav-link">Contacto</a>
                 </li>
             </ul>
-            <a href="#" class="btn btn-info btn-sm navbar-btn my-lg-0 my-2">Try it Free</a>
+            <a class="btn btn-info btn-sm navbar-btn my-lg-0 my-2" href="{% url 'login' %}">Iniciar Sesión</a>
 
         </div>
     </div>
 </nav>
 <!-- Navbar End -->
 
-<!-- Hero section Start -->
+<!-- Inicio-->
 <section class="hero-6 position-relative d-flex justify-content-center align-items-center" id="home">
     <div class="hero-6-bg" style="background-image: url({% static 'images/hero-6-bg.png' %});"></div>
     <div class="container">
@@ -91,11 +131,10 @@
         <!-- end row -->
     </div>
     <!-- end container -->
-    <!--    <canvas class="particles-js-canvas-el" style="width: 100%; height: 100%; position: absolute; top: 0px;" width="1903" height="955"></canvas>-->
 </section>
-<!-- Hero section End -->
+<!-- Inicio End -->
 
-<!-- Start About -->
+<!-- Sobre nosotros -->
 <section class="section" id="about">
     <div class="container">
         <div class="row justify-content-center">
@@ -155,9 +194,9 @@
     </div>
     <!-- end container -->
 </section>
-<!-- end About -->
+<!-- end Sobre nosotros -->
 
-<!-- Start Features -->
+<!-- Start Servicios -->
 <section class="section bg-light" id="features">
     <div class="container">
         <div class="row justify-content-center">
@@ -237,314 +276,314 @@
     </div>
     <!-- end container -->
 </section>
-<!-- End Features -->
+<!-- End Servicios -->
 
-<!-- Start Clients -->
-<section class="section mt-5" id="clients">
-    <div class="container">
-        <div class="row pb-5 align-items-center">
-            <div class="col-lg-4 col-md-4">
-                <div class="icons-lg mb-4">
-                    <i class="uim uim-comment-message"></i>
-                </div>
-                <h3 class="mb-2">2,200<sup>+</sup></h3>
-                <h3 class="mb-4">Satisfied Clients</h3>
-                <p class="text-muted mb-sm-0 mb-5 pb-sm-0 pb-4">If several languages coalesce, the grammar of the
-                    resulting language is more simple and regular than that of the individual</p>
-            </div>
+<!-- Start Clientes -->
+<!--<section class="section mt-5" id="clients">-->
+<!--    <div class="container">-->
+<!--        <div class="row pb-5 align-items-center">-->
+<!--            <div class="col-lg-4 col-md-4">-->
+<!--                <div class="icons-lg mb-4">-->
+<!--                    <i class="uim uim-comment-message"></i>-->
+<!--                </div>-->
+<!--                <h3 class="mb-2">2,200<sup>+</sup></h3>-->
+<!--                <h3 class="mb-4">Satisfied Clients</h3>-->
+<!--                <p class="text-muted mb-sm-0 mb-5 pb-sm-0 pb-4">If several languages coalesce, the grammar of the-->
+<!--                    resulting language is more simple and regular than that of the individual</p>-->
+<!--            </div>-->
 
-            <div class="col-lg-8 col-md-8">
-                <div class="client-slider">
-                    <div>
-                        <div class="bg-light rounded p-4">
-                            <p class="text-muted mb-4">" It will be as simple as Occidental; in fact, it will be
-                                Occidental. To an English person, it will seem like simplified, If several languages of
-                                the resulting language"</p>
-                            <div class="pt-3">
-                                <div class="d-inline-block">
-                                    <h5 class="font-16 mb-1">James Vazquez</h5>
-                                    <span class="text-muted">- Peyso User</span>
-                                </div>
-                                <div class="text-muted d-inline-block float-end">
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star text-warning"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="bg-light rounded p-4">
-                            <p class="text-muted mb-4">" To achieve this, it would be necessary to have uniform grammar,
-                                pronunciation and more common words. If several languages of the resulting
-                                language."</p>
+<!--            <div class="col-lg-8 col-md-8">-->
+<!--                <div class="client-slider">-->
+<!--                    <div>-->
+<!--                        <div class="bg-light rounded p-4">-->
+<!--                            <p class="text-muted mb-4">" It will be as simple as Occidental; in fact, it will be-->
+<!--                                Occidental. To an English person, it will seem like simplified, If several languages of-->
+<!--                                the resulting language"</p>-->
+<!--                            <div class="pt-3">-->
+<!--                                <div class="d-inline-block">-->
+<!--                                    <h5 class="font-16 mb-1">James Vazquez</h5>-->
+<!--                                    <span class="text-muted">- Peyso User</span>-->
+<!--                                </div>-->
+<!--                                <div class="text-muted d-inline-block float-end">-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="bg-light rounded p-4">-->
+<!--                            <p class="text-muted mb-4">" To achieve this, it would be necessary to have uniform grammar,-->
+<!--                                pronunciation and more common words. If several languages of the resulting-->
+<!--                                language."</p>-->
 
-                            <div class="pt-3">
-                                <div class="d-inline-block">
-                                    <h5 class="font-16 mb-1">Clara Searcy</h5>
-                                    <span class="text-muted">- Peyso User</span>
-                                </div>
-                                <div class="text-muted d-inline-block float-end">
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="bg-light rounded p-4">
-                            <p class="text-muted mb-4">
-                                " If several It will be as simple as Occidental; it will be Occidental. To an English
-                                person, it will seem like simplified, If several languages of the resulting language "
-                            </p>
-                            <div class="pt-3">
-                                <div class="d-inline-block">
-                                    <h5 class="font-16 mb-1">Alfredo Williams</h5>
-                                    <span class="text-muted">- Peyso User</span>
-                                </div>
-                                <div class="text-muted d-inline-block float-end">
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star text-warning"></i>
-                                    <i class="mdi mdi-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end row -->
+<!--                            <div class="pt-3">-->
+<!--                                <div class="d-inline-block">-->
+<!--                                    <h5 class="font-16 mb-1">Clara Searcy</h5>-->
+<!--                                    <span class="text-muted">- Peyso User</span>-->
+<!--                                </div>-->
+<!--                                <div class="text-muted d-inline-block float-end">-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star"></i>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="bg-light rounded p-4">-->
+<!--                            <p class="text-muted mb-4">-->
+<!--                                " If several It will be as simple as Occidental; it will be Occidental. To an English-->
+<!--                                person, it will seem like simplified, If several languages of the resulting language "-->
+<!--                            </p>-->
+<!--                            <div class="pt-3">-->
+<!--                                <div class="d-inline-block">-->
+<!--                                    <h5 class="font-16 mb-1">Alfredo Williams</h5>-->
+<!--                                    <span class="text-muted">- Peyso User</span>-->
+<!--                                </div>-->
+<!--                                <div class="text-muted d-inline-block float-end">-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star text-warning"></i>-->
+<!--                                    <i class="mdi mdi-star"></i>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; end row &ndash;&gt;-->
 
-        <!-- start brand logo -->
-        <div class="row mt-5">
-            <div class="col-lg-3 col-sm-3">
-                <div class="client-images">
-                    <img src="{% static 'images/clients/1.png' %}" alt="client-img" class="mx-auto img-fluid d-block"/>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-3">
-                <div class="client-images">
-                    <img src="{% static 'images/clients/3.png' %}" alt="client-img" class="mx-auto img-fluid d-block"/>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-3">
-                <div class="client-images">
-                    <img src="{% static 'images/clients/4.png' %}" alt="client-img" class="mx-auto img-fluid d-block"/>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-3">
-                <div class="client-images">
-                    <img src="{% static 'images/clients/6.png' %}" alt="client-img" class="mx-auto img-fluid d-block"/>
-                </div>
-            </div>
-        </div>
-        <!-- end row -->
-    </div>
-    <!-- end container -->
-</section>
-<!-- End Clients -->
+<!--        &lt;!&ndash; start brand logo &ndash;&gt;-->
+<!--        <div class="row mt-5">-->
+<!--            <div class="col-lg-3 col-sm-3">-->
+<!--                <div class="client-images">-->
+<!--                    <img src="{% static 'images/clients/1.png' %}" alt="client-img" class="mx-auto img-fluid d-block"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-lg-3 col-sm-3">-->
+<!--                <div class="client-images">-->
+<!--                    <img src="{% static 'images/clients/3.png' %}" alt="client-img" class="mx-auto img-fluid d-block"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-lg-3 col-sm-3">-->
+<!--                <div class="client-images">-->
+<!--                    <img src="{% static 'images/clients/4.png' %}" alt="client-img" class="mx-auto img-fluid d-block"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-lg-3 col-sm-3">-->
+<!--                <div class="client-images">-->
+<!--                    <img src="{% static 'images/clients/6.png' %}" alt="client-img" class="mx-auto img-fluid d-block"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; end row &ndash;&gt;-->
+<!--    </div>-->
+<!--    &lt;!&ndash; end container &ndash;&gt;-->
+<!--</section>-->
+<!--&lt;!&ndash; End Clientes &ndash;&gt;-->
 
 <!-- Start cta section -->
-<section class="py-5 bg-primary">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-9">
-                <div class="text-white-50">
-                    <h3 class="text-white">Build your dream website today</h3>
-                    <p class="mb-0 fs-6">If several languages coalesce, the grammar of the resulting</p>
-                </div>
-            </div>
+<!--<section class="py-5 bg-primary">-->
+<!--    <div class="container">-->
+<!--        <div class="row align-items-center">-->
+<!--            <div class="col-md-9">-->
+<!--                <div class="text-white-50">-->
+<!--                    <h3 class="text-white">Build your dream website today</h3>-->
+<!--                    <p class="mb-0 fs-6">If several languages coalesce, the grammar of the resulting</p>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="col-md-3">
-                <div class="mt-4 mt-md-0 text-md-end">
-                    <a href="#" class="btn btn-info">Get Started</a>
-                </div>
-            </div>
-        </div>
-        <!-- end row -->
-    </div>
-    <!-- end container -->
-</section>
-<!-- End cta section -->
+<!--            <div class="col-md-3">-->
+<!--                <div class="mt-4 mt-md-0 text-md-end">-->
+<!--                    <a href="#" class="btn btn-info">Get Started</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; end row &ndash;&gt;-->
+<!--    </div>-->
+<!--    &lt;!&ndash; end container &ndash;&gt;-->
+<!--</section>-->
+<!--&lt;!&ndash; End cta section &ndash;&gt;-->
 
 <!-- Start pricing -->
-<section class="section bg-light" id="pricing">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="text-center title mb-5">
-                    <p class="text-muted text-uppercase fw-normal mb-2">Plan</p>
-                    <h3 class="mb-3">Our Pricing</h3>
-                    <div class="title-icon position-relative">
-                        <div class="position-relative">
-                            <i class="uim uim-arrow-circle-down"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end row -->
+<!--<section class="section bg-light" id="pricing">-->
+<!--    <div class="container">-->
+<!--        <div class="row justify-content-center">-->
+<!--            <div class="col-lg-8">-->
+<!--                <div class="text-center title mb-5">-->
+<!--                    <p class="text-muted text-uppercase fw-normal mb-2">Plan</p>-->
+<!--                    <h3 class="mb-3">Our Pricing</h3>-->
+<!--                    <div class="title-icon position-relative">-->
+<!--                        <div class="position-relative">-->
+<!--                            <i class="uim uim-arrow-circle-down"></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; end row &ndash;&gt;-->
 
-        <div class="row pb-4">
-            <div class="col-lg-4 col-md-6">
-                <div class="card plan-box text-center p-2">
-                    <div class="card-body">
-                        <div class="icons-xl pt-4">
-                            <i class="uim uim-box"></i>
-                        </div>
-                        <h4 class="mt-4">Economy</h4>
+<!--        <div class="row pb-4">-->
+<!--            <div class="col-lg-4 col-md-6">-->
+<!--                <div class="card plan-box text-center p-2">-->
+<!--                    <div class="card-body">-->
+<!--                        <div class="icons-xl pt-4">-->
+<!--                            <i class="uim uim-box"></i>-->
+<!--                        </div>-->
+<!--                        <h4 class="mt-4">Economy</h4>-->
 
-                        <div class="plan-features text-muted mt-5">
-                            <p>Storage : <span class="text-info fw-semibold">10 GB</span></p>
-                            <p>Bandwidth : <span class="text-info fw-semibold">500 GB</span></p>
-                            <p>Domain : <span class="text-info fw-semibold">No</span></p>
-                            <p>Support : <span class="text-info fw-semibold">No</span></p>
-                        </div>
+<!--                        <div class="plan-features text-muted mt-5">-->
+<!--                            <p>Storage : <span class="text-info fw-semibold">10 GB</span></p>-->
+<!--                            <p>Bandwidth : <span class="text-info fw-semibold">500 GB</span></p>-->
+<!--                            <p>Domain : <span class="text-info fw-semibold">No</span></p>-->
+<!--                            <p>Support : <span class="text-info fw-semibold">No</span></p>-->
+<!--                        </div>-->
 
-                        <div class="mt-5">
-                            <h3>
-                                <sup><small>$</small></sup>19 / <span class="font-16 text-muted">Month</span>
-                            </h3>
-                            <div class="mt-4 mb-4">
-                                <a href="#" class="btn btn-info btn-block">Join now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card plan-box text-center p-2">
-                    <div class="card-body">
-                        <div>
-                            <div class="icons-xl pt-4">
-                                <i class="uim uim-rocket"></i>
-                            </div>
-                            <h4 class="mt-4">Premium</h4>
+<!--                        <div class="mt-5">-->
+<!--                            <h3>-->
+<!--                                <sup><small>$</small></sup>19 / <span class="font-16 text-muted">Month</span>-->
+<!--                            </h3>-->
+<!--                            <div class="mt-4 mb-4">-->
+<!--                                <a href="#" class="btn btn-info btn-block">Join now</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-lg-4 col-md-6">-->
+<!--                <div class="card plan-box text-center p-2">-->
+<!--                    <div class="card-body">-->
+<!--                        <div>-->
+<!--                            <div class="icons-xl pt-4">-->
+<!--                                <i class="uim uim-rocket"></i>-->
+<!--                            </div>-->
+<!--                            <h4 class="mt-4">Premium</h4>-->
 
-                            <div class="plan-features text-muted mt-5">
-                                <p>Storage : <span class="text-info fw-semibold">20 GB</span></p>
-                                <p>Bandwidth : <span class="text-info fw-semibold">800 GB</span></p>
-                                <p>Domain : <span class="text-info fw-semibold">Yes</span></p>
-                                <p>Support : <span class="text-info fw-semibold">Yes</span></p>
-                            </div>
+<!--                            <div class="plan-features text-muted mt-5">-->
+<!--                                <p>Storage : <span class="text-info fw-semibold">20 GB</span></p>-->
+<!--                                <p>Bandwidth : <span class="text-info fw-semibold">800 GB</span></p>-->
+<!--                                <p>Domain : <span class="text-info fw-semibold">Yes</span></p>-->
+<!--                                <p>Support : <span class="text-info fw-semibold">Yes</span></p>-->
+<!--                            </div>-->
 
-                            <div class="mt-5">
-                                <h3>
-                                    <sup><small>$</small></sup>29 / <span class="font-16 text-muted">Month</span>
-                                </h3>
-                                <div class="mt-4 mb-4">
-                                    <a href="#" class="btn btn-info btn-block">Join now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card plan-box text-center p-2">
-                    <div class="card-body">
-                        <div>
-                            <div class="icons-xl pt-4">
-                                <i class="uim uim-user-md"></i>
-                            </div>
-                            <h4 class="mt-4">Developer</h4>
+<!--                            <div class="mt-5">-->
+<!--                                <h3>-->
+<!--                                    <sup><small>$</small></sup>29 / <span class="font-16 text-muted">Month</span>-->
+<!--                                </h3>-->
+<!--                                <div class="mt-4 mb-4">-->
+<!--                                    <a href="#" class="btn btn-info btn-block">Join now</a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-lg-4 col-md-6">-->
+<!--                <div class="card plan-box text-center p-2">-->
+<!--                    <div class="card-body">-->
+<!--                        <div>-->
+<!--                            <div class="icons-xl pt-4">-->
+<!--                                <i class="uim uim-user-md"></i>-->
+<!--                            </div>-->
+<!--                            <h4 class="mt-4">Developer</h4>-->
 
-                            <div class="plan-features text-muted mt-5">
-                                <p>Storage : <span class="text-info fw-semibold">30 GB</span></p>
-                                <p>Bandwidth : <span class="text-info fw-semibold">Unlimited</span></p>
-                                <p>Domain : <span class="text-info fw-semibold">Yes</span></p>
-                                <p>Support : <span class="text-info fw-semibold">Yes</span></p>
-                            </div>
+<!--                            <div class="plan-features text-muted mt-5">-->
+<!--                                <p>Storage : <span class="text-info fw-semibold">30 GB</span></p>-->
+<!--                                <p>Bandwidth : <span class="text-info fw-semibold">Unlimited</span></p>-->
+<!--                                <p>Domain : <span class="text-info fw-semibold">Yes</span></p>-->
+<!--                                <p>Support : <span class="text-info fw-semibold">Yes</span></p>-->
+<!--                            </div>-->
 
-                            <div class="mt-5">
-                                <h3>
-                                    <sup><small>$</small></sup>39 / <span class="font-16 text-muted">Month</span>
-                                </h3>
-                                <div class="mt-4 mb-4">
-                                    <a href="#" class="btn btn-info btn-block">Join now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end plans row -->
+<!--                            <div class="mt-5">-->
+<!--                                <h3>-->
+<!--                                    <sup><small>$</small></sup>39 / <span class="font-16 text-muted">Month</span>-->
+<!--                                </h3>-->
+<!--                                <div class="mt-4 mb-4">-->
+<!--                                    <a href="#" class="btn btn-info btn-block">Join now</a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; end plans row &ndash;&gt;-->
 
-        <!-- start faq -->
-        <div class="row mb-5 pb-4">
-            <div class="col-lg-6 col-md-6">
-                <div class="mt-5 d-flex">
-                    <div class="me-3">
-                        <div class="avatar-title rounded-circle bg-soft-primary avatar-md text-primary">
-                            <i class="mdi mdi-help"></i>
-                        </div>
-                    </div>
+<!--        &lt;!&ndash; start faq &ndash;&gt;-->
+<!--        <div class="row mb-5 pb-4">-->
+<!--            <div class="col-lg-6 col-md-6">-->
+<!--                <div class="mt-5 d-flex">-->
+<!--                    <div class="me-3">-->
+<!--                        <div class="avatar-title rounded-circle bg-soft-primary avatar-md text-primary">-->
+<!--                            <i class="mdi mdi-help"></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                    <div>
-                        <h5 class="font-18 mt-1">What is Lorem Ipsum ?</h5>
-                        <p class="text-muted">If several languages coalesce, the grammar of the resulting language is
-                            more simple and regular than that of the individual</p>
-                    </div>
-                </div>
+<!--                    <div>-->
+<!--                        <h5 class="font-18 mt-1">What is Lorem Ipsum ?</h5>-->
+<!--                        <p class="text-muted">If several languages coalesce, the grammar of the resulting language is-->
+<!--                            more simple and regular than that of the individual</p>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="mt-4 d-flex">
-                    <div class="me-3">
-                        <div class="avatar-title rounded-circle bg-soft-primary avatar-md text-primary">
-                            <i class="mdi mdi-help"></i>
-                        </div>
-                    </div>
+<!--                <div class="mt-4 d-flex">-->
+<!--                    <div class="me-3">-->
+<!--                        <div class="avatar-title rounded-circle bg-soft-primary avatar-md text-primary">-->
+<!--                            <i class="mdi mdi-help"></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                    <div>
-                        <h5 class="font-18 mt-1">Why do we use it ?</h5>
-                        <p class="text-muted">For science, music, sport, etc, Europe uses the same vocabulary. The
-                            languages only differ in their grammar, their pronunciation and their most common words.</p>
-                    </div>
-                </div>
-            </div>
+<!--                    <div>-->
+<!--                        <h5 class="font-18 mt-1">Why do we use it ?</h5>-->
+<!--                        <p class="text-muted">For science, music, sport, etc, Europe uses the same vocabulary. The-->
+<!--                            languages only differ in their grammar, their pronunciation and their most common words.</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="col-lg-6 col-md-6">
-                <div class="mt-sm-5 mt-4 d-flex">
-                    <div class="me-3">
-                        <div class="avatar-title rounded-circle bg-soft-primary avatar-md text-primary">
-                            <i class="mdi mdi-help"></i>
-                        </div>
-                    </div>
+<!--            <div class="col-lg-6 col-md-6">-->
+<!--                <div class="mt-sm-5 mt-4 d-flex">-->
+<!--                    <div class="me-3">-->
+<!--                        <div class="avatar-title rounded-circle bg-soft-primary avatar-md text-primary">-->
+<!--                            <i class="mdi mdi-help"></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                    <div>
-                        <h5 class="font-18 mt-1">Where does it come from ?</h5>
-                        <p class="text-muted">To achieve this, it would be necessary to have uniform grammar,
-                            pronunciation and more common words.</p>
-                    </div>
-                </div>
+<!--                    <div>-->
+<!--                        <h5 class="font-18 mt-1">Where does it come from ?</h5>-->
+<!--                        <p class="text-muted">To achieve this, it would be necessary to have uniform grammar,-->
+<!--                            pronunciation and more common words.</p>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="mt-4 d-flex">
-                    <div class="me-3">
-                        <div class="avatar-title rounded-circle bg-soft-primary avatar-md text-primary">
-                            <i class="mdi mdi-help"></i>
-                        </div>
-                    </div>
+<!--                <div class="mt-4 d-flex">-->
+<!--                    <div class="me-3">-->
+<!--                        <div class="avatar-title rounded-circle bg-soft-primary avatar-md text-primary">-->
+<!--                            <i class="mdi mdi-help"></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                    <div>
-                        <h5 class="font-18 mt-1">Where can I get some ?</h5>
-                        <p class="text-muted">It will be as simple as in fact, it will be Occidental. To it will seem
-                            like simplified English as a skeptical</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end faq row -->
-    </div>
-    <!-- end container -->
-</section>
-<!-- end pricing -->
+<!--                    <div>-->
+<!--                        <h5 class="font-18 mt-1">Where can I get some ?</h5>-->
+<!--                        <p class="text-muted">It will be as simple as in fact, it will be Occidental. To it will seem-->
+<!--                            like simplified English as a skeptical</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; end faq row &ndash;&gt;-->
+<!--    </div>-->
+<!--    &lt;!&ndash; end container &ndash;&gt;-->
+<!--</section>-->
+<!--&lt;!&ndash; end pricing &ndash;&gt;-->
 
 <!-- Start contact -->
 <section id="contact">
@@ -564,42 +603,42 @@
                         </div>
 
                         <!-- start form -->
-                        <form method="post" name="myForm" onsubmit="return validateForm()" href="javascript: void(0);">
+                        <form method="post" action="{% url 'contact' %}">
+                            {% csrf_token %}
                             <p id="error-msg"></p>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label class="form-label" for="name">Name</label>
-                                        <input name="name" id="name" type="text" class="form-control"
-                                               placeholder="Enter your name..."/>
+                                        <label class="form-label" for="id_name">Name</label>
+                                        <input name="name" id="id_name" type="text" class="form-control"
+                                               placeholder="Enter your name..." value="{{ form.name.value }}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label class="form-label" for="email">Email address</label>
-                                        <input name="email" id="email" type="email" class="form-control"
-                                               placeholder="Enter your email..."/>
+                                        <label class="form-label" for="id_email">Email address</label>
+                                        <input name="email" id="id_email" type="email" class="form-control"
+                                               placeholder="Enter your email..." value="{{ form.email.value }}"/>
                                     </div>
                                 </div>
                             </div>
                             <!-- end row -->
 
                             <div class="mb-3">
-                                <label class="form-label" for="subject">Subject</label>
-                                <input name="subject" id="subject" type="text" class="form-control"
-                                       placeholder="Enter Subject..."/>
+                                <label class="form-label" for="id_subject">Subject</label>
+                                <input name="subject" id="id_subject" type="text" class="form-control"
+                                       placeholder="Enter Subject..." value="{{ form.subject.value }}"/>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="comments">Message</label>
-                                <textarea name="comments" id="comments" rows="3" class="form-control"
-                                          placeholder="Enter your message..."></textarea>
+                                <label class="form-label" for="id_message">Message</label>
+                                <textarea name="message" id="id_message" rows="3" class="form-control"
+                                          placeholder="Enter your message...">{{ form.message.value }}</textarea>
                             </div>
 
                             <div class="text-end">
                                 <input type="submit" id="submit" name="send" class="submitBnt btn btn-primary"
                                        value="Send message"/>
-
                             </div>
                         </form>
                     </div>
@@ -610,6 +649,8 @@
     </div>
     <!-- end container -->
 </section>
+
+
 <!-- end contact -->
 
 <!-- start footer -->
@@ -689,7 +730,6 @@
     <!-- end container -->
 </section>
 <!-- end footer-alt -->
-
 <!-- Javascript -->
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
